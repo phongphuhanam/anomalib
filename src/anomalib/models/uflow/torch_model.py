@@ -39,11 +39,12 @@ class AffineCouplingSubnet:
             nn.Conv2d(mid_channels, out_channels, self.kernel_size, padding="same"),
         )
 
+from typing import Tuple, List
 
 class UflowModel(nn.Module):
     def __init__(
         self,
-        input_size: tuple[int, int] = (448, 448),
+        input_size: Tuple[int, int] = (448, 448),
         flow_steps: int = 4,
         backbone: str = "mcait",
         affine_clamp: float = 2.0,
@@ -121,7 +122,7 @@ class UflowModel(nn.Module):
 
         return ff.GraphINN(input_nodes + nodes + output_nodes[::-1])
 
-    def build_flow_stage(self, in_node: ff.Node, flow_steps: int, condition_node: ff.Node = None) -> list[ff.Node]:
+    def build_flow_stage(self, in_node: ff.Node, flow_steps: int, condition_node: ff.Node = None) -> List[ff.Node]:
         """
         Build a flow stage, which is a sequence of flow steps.
         Each flow stage is essentially a sequence of `flow_steps` Glow blocks (`AllInOneBlock`).
